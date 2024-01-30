@@ -1,0 +1,34 @@
+{
+	"extends": ["chance", "chance/react"],
+	"overrides": [
+		{
+			"files": ["app/**"],
+			"plugins": ["remix-react-routes"],
+			"excludedFiles": [
+				"**/tests/**",
+				"app/**/__tests__/**/*",
+				"app/**/*.{spec,test}.*"
+			],
+			"rules": {
+				"remix-react-routes/use-link-for-routes": "error",
+				"remix-react-routes/require-valid-paths": "error",
+				"remix-react-routes/no-relative-paths": [
+					"off",
+					{ "allowLinksToSelf": true }
+				],
+				"remix-react-routes/no-urls": "error",
+				"no-restricted-imports": [
+					"error",
+					{
+						"patterns": [
+							{
+								"group": ["app/**/__tests__/**/*", "app/**/*.{spec,test}.*"],
+								"message": "Do not import test files in app files"
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}
