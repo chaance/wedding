@@ -31,6 +31,44 @@ export function createUser() {
 	};
 }
 
+export function createRSVP() {
+	const nameFirst = faker.person.firstName();
+	const nameLast = faker.person.lastName();
+
+	// random number between 0 and 3
+	const guestCount = faker.number.int({ min: 0, max: 3 });
+	const guests = Array.from({ length: guestCount }, () => ({
+		nameFirst: faker.person.firstName(),
+		nameLast: faker.person.lastName(),
+		age: (Math.random() > 0.3 ? "adult" : "child") as "adult" | "child",
+	}));
+
+	const username = uniqueUsernameEnforcer
+		.enforce(() => {
+			return (
+				faker.string.alphanumeric({ length: 2 }) +
+				"_" +
+				faker.internet.userName({
+					firstName: nameFirst.toLowerCase(),
+					lastName: nameLast.toLowerCase(),
+				})
+			);
+		})
+		.slice(0, 20)
+		.toLowerCase()
+		.replace(/[^a-z0-9_]/g, "_");
+	return {
+		nameFirst,
+		nameLast,
+		email: `${username}@example.com`,
+		guests,
+		attending: Math.random() > 0.3,
+		songRequest: Math.random() > 0.5 ? faker.lorem.sentence() : undefined,
+		dietaryRestrictions:
+			Math.random() > 0.6 ? faker.lorem.sentence() : undefined,
+	};
+}
+
 export function createPassword(password: string = faker.internet.password()) {
 	return {
 		hash: bcrypt.hashSync(password, 10),

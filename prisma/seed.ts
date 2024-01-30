@@ -5,6 +5,7 @@ import {
 	cleanupDb,
 	createPassword,
 	createUser,
+	createRSVP,
 	getNoteImages,
 	getUserImages,
 	img,
@@ -248,6 +249,27 @@ async function seed() {
 		},
 	});
 	console.timeEnd(`🐨 Created admin user "kody"`);
+
+	const totalRSVPs = 5;
+	console.time(`👤 Created ${totalRSVPs} RSVPs...`);
+
+	for (let index = 0; index < totalRSVPs; index++) {
+		const { guests, ...rsvpData } = createRSVP();
+		await prisma.rsvp
+			.create({
+				select: { id: true },
+				data: {
+					...rsvpData,
+					guests: JSON.stringify(guests),
+				},
+			})
+			.catch((e) => {
+				console.error("Error creating RSVP:", e);
+				return null;
+			});
+	}
+
+	console.timeEnd(`👤 Created ${totalRSVPs} RSVPs...`);
 
 	console.timeEnd(`🌱 Database has been seeded`);
 }
