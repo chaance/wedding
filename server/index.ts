@@ -126,7 +126,12 @@ app.use(
 				].filter(Boolean),
 				"font-src": ["'self'"],
 				"frame-src": ["'self'"],
-				"img-src": ["'self'", "data:"],
+				"img-src": [
+					"'self'",
+					"data:",
+					MODE === "development" ? "https://picsum.photos/" : null,
+					MODE === "development" ? "https://fastly.picsum.photos/" : null,
+				].filter(Boolean),
 				"script-src": [
 					"'strict-dynamic'",
 					"'self'",
