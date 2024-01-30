@@ -167,3 +167,19 @@ model Connection {
 
   @@unique([providerName, providerId])
 }
+
+model Rsvp {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email     String  @unique
+  nameFirst String
+  nameLast  String
+  attending Boolean
+  // JSON stringified array of guests. Accepting +1 and kids
+  guests    String
+
+  songRequest         String?
+  dietaryRestrictions String?
+}
