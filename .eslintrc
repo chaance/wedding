@@ -1,5 +1,5 @@
 {
-	"extends": ["chance", "chance/react"],
+	"extends": ["chance", "chance/typescript", "chance/react"],
 	"overrides": [
 		{
 			"files": ["app/**"],
