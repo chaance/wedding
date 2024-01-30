@@ -1,10 +1,10 @@
-import fs from 'node:fs'
-import { createRelease } from '@sentry/remix/scripts/createRelease.js'
-import { glob } from 'glob'
-import 'dotenv/config'
+import fs from "node:fs";
+import { createRelease } from "@sentry/remix/scripts/createRelease.js";
+import { glob } from "glob";
+import "dotenv/config";
 
-const DEFAULT_URL_PREFIX = '#build/'
-const DEFAULT_BUILD_PATH = 'public/build'
+const DEFAULT_URL_PREFIX = "#build/";
+const DEFAULT_BUILD_PATH = "public/build";
 
 // exit with non-zero code if we have everything for Sentry
 if (
@@ -13,14 +13,14 @@ if (
 	process.env.SENTRY_PROJECT &&
 	process.env.SENTRY_AUTH_TOKEN
 ) {
-	createRelease({}, DEFAULT_URL_PREFIX, DEFAULT_BUILD_PATH)
+	createRelease({}, DEFAULT_URL_PREFIX, DEFAULT_BUILD_PATH);
 } else {
 	console.log(
-		'Missing Sentry environment variables, skipping sourcemap upload.',
-	)
+		"Missing Sentry environment variables, skipping sourcemap upload.",
+	);
 }
-const files = await glob(['./public/**/*.map', './build/**/*.map'])
+const files = await glob(["./public/**/*.map", "./build/**/*.map"]);
 for (const file of files) {
 	// remove file
-	await fs.promises.unlink(file)
+	await fs.promises.unlink(file);
 }

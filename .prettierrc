@@ -1,5 +1,12 @@
-
 {
-    "useTabs": true,
-    "tabWidth": 2
+	"useTabs": true,
+	"tabWidth": 2,
+	"overrides": [
+		{
+			"files": [".eslintrc"],
+			"options": {
+				"trailingComma": "none"
+			}
+		}
+	]
 }

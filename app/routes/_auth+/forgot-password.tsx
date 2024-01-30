@@ -1,31 +1,31 @@
-import { conform, useForm } from '@conform-to/react'
-import { getFieldsetConstraint, parse } from '@conform-to/zod'
-import * as E from '@react-email/components'
+import { conform, useForm } from "@conform-to/react";
+import { getFieldsetConstraint, parse } from "@conform-to/zod";
+import * as E from "@react-email/components";
 import {
 	json,
 	redirect,
 	type ActionFunctionArgs,
 	type MetaFunction,
-} from '@remix-run/node'
-import { Link, useFetcher } from '@remix-run/react'
-import { HoneypotInputs } from 'remix-utils/honeypot/react'
-import { z } from 'zod'
-import { GeneralErrorBoundary } from '#app/components/error-boundary.tsx'
-import { ErrorList, Field } from '#app/components/forms.tsx'
-import { StatusButton } from '#app/components/ui/status-button.tsx'
-import { prisma } from '#app/utils/db.server.ts'
-import { sendEmail } from '#app/utils/email.server.ts'
-import { checkHoneypot } from '#app/utils/honeypot.server.ts'
-import { EmailSchema, UsernameSchema } from '#app/utils/user-validation.ts'
-import { prepareVerification } from './verify.tsx'
+} from "@remix-run/node";
+import { Link, useFetcher } from "@remix-run/react";
+import { HoneypotInputs } from "remix-utils/honeypot/react";
+import { z } from "zod";
+import { GeneralErrorBoundary } from "#app/components/error-boundary.tsx";
+import { ErrorList, Field } from "#app/components/forms.tsx";
+import { StatusButton } from "#app/components/ui/status-button.tsx";
+import { prisma } from "#app/utils/db.server.ts";
+import { sendEmail } from "#app/utils/email.server.ts";
+import { checkHoneypot } from "#app/utils/honeypot.server.ts";
+import { EmailSchema, UsernameSchema } from "#app/utils/user-validation.ts";
+import { prepareVerification } from "./verify.tsx";
 
 const ForgotPasswordSchema = z.object({
 	usernameOrEmail: z.union([EmailSchema, UsernameSchema]),
-})
+});
 
 export async function action({ request }: ActionFunctionArgs) {
-	const formData = await request.formData()
-	checkHoneypot(formData)
+	const formData = await request.formData();
+	checkHoneypot(formData);
 	const submission = await parse(formData, {
 		schema: ForgotPasswordSchema.superRefine(async (data, ctx) => {
 			const user = await prisma.user.findFirst({
@@ -36,37 +36,37 @@ export async function action({ request }: ActionFunctionArgs) {
 					],
 				},
 				select: { id: true },
-			})
+			});
 			if (!user) {
 				ctx.addIssue({
-					path: ['usernameOrEmail'],
+					path: ["usernameOrEmail"],
 					code: z.ZodIssueCode.custom,
-					message: 'No user exists with this username or email',
-				})
-				return
+					message: "No user exists with this username or email",
+				});
+				return;
 			}
 		}),
 		async: true,
-	})
-	if (submission.intent !== 'submit') {
-		return json({ status: 'idle', submission } as const)
+	});
+	if (submission.intent !== "submit") {
+		return json({ status: "idle", submission } as const);
 	}
 	if (!submission.value) {
-		return json({ status: 'error', submission } as const, { status: 400 })
+		return json({ status: "error", submission } as const, { status: 400 });
 	}
-	const { usernameOrEmail } = submission.value
+	const { usernameOrEmail } = submission.value;
 
 	const user = await prisma.user.findFirstOrThrow({
 		where: { OR: [{ email: usernameOrEmail }, { username: usernameOrEmail }] },
 		select: { email: true, username: true },
-	})
+	});
 
 	const { verifyUrl, redirectTo, otp } = await prepareVerification({
 		period: 10 * 60,
 		request,
-		type: 'reset-password',
+		type: "reset-password",
 		target: usernameOrEmail,
-	})
+	});
 
 	const response = await sendEmail({
 		to: user.email,
@@ -74,13 +74,13 @@ export async function action({ request }: ActionFunctionArgs) {
 		react: (
 			<ForgotPasswordEmail onboardingUrl={verifyUrl.toString()} otp={otp} />
 		),
-	})
+	});
 
-	if (response.status === 'success') {
-		return redirect(redirectTo.toString())
+	if (response.status === "success") {
+		return redirect(redirectTo.toString());
 	} else {
-		submission.error[''] = [response.error.message]
-		return json({ status: 'error', submission } as const, { status: 500 })
+		submission.error[""] = [response.error.message];
+		return json({ status: "error", submission } as const, { status: 500 });
 	}
 }
 
@@ -88,8 +88,8 @@ function ForgotPasswordEmail({
 	onboardingUrl,
 	otp,
 }: {
-	onboardingUrl: string
-	otp: string
+	onboardingUrl: string;
+	otp: string;
 }) {
 	return (
 		<E.Html lang="en" dir="ltr">
@@ -108,25 +108,25 @@ function ForgotPasswordEmail({
 				<E.Link href={onboardingUrl}>{onboardingUrl}</E.Link>
 			</E.Container>
 		</E.Html>
-	)
+	);
 }
 
 export const meta: MetaFunction = () => {
-	return [{ title: 'Password Recovery for Epic Notes' }]
-}
+	return [{ title: "Password Recovery for Epic Notes" }];
+};
 
 export default function ForgotPasswordRoute() {
-	const forgotPassword = useFetcher<typeof action>()
+	const forgotPassword = useFetcher<typeof action>();
 
 	const [form, fields] = useForm({
-		id: 'forgot-password-form',
+		id: "forgot-password-form",
 		constraint: getFieldsetConstraint(ForgotPasswordSchema),
 		lastSubmission: forgotPassword.data?.submission,
 		onValidate({ formData }) {
-			return parse(formData, { schema: ForgotPasswordSchema })
+			return parse(formData, { schema: ForgotPasswordSchema });
 		},
-		shouldRevalidate: 'onBlur',
-	})
+		shouldRevalidate: "onBlur",
+	});
 
 	return (
 		<div className="container pb-32 pt-20">
@@ -144,7 +144,7 @@ export default function ForgotPasswordRoute() {
 							<Field
 								labelProps={{
 									htmlFor: fields.usernameOrEmail.id,
-									children: 'Username or Email',
+									children: "Username or Email",
 								}}
 								inputProps={{
 									autoFocus: true,
@@ -159,12 +159,12 @@ export default function ForgotPasswordRoute() {
 							<StatusButton
 								className="w-full"
 								status={
-									forgotPassword.state === 'submitting'
-										? 'pending'
-										: forgotPassword.data?.status ?? 'idle'
+									forgotPassword.state === "submitting"
+										? "pending"
+										: forgotPassword.data?.status ?? "idle"
 								}
 								type="submit"
-								disabled={forgotPassword.state !== 'idle'}
+								disabled={forgotPassword.state !== "idle"}
 							>
 								Recover password
 							</StatusButton>
@@ -179,9 +179,9 @@ export default function ForgotPasswordRoute() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
 
 export function ErrorBoundary() {
-	return <GeneralErrorBoundary />
+	return <GeneralErrorBoundary />;
 }
