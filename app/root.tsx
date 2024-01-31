@@ -224,9 +224,9 @@ function App() {
 			<div className="flex h-screen flex-col justify-between">
 				<header className="container py-6">
 					<div className="flex justify-between gap-6">
-						<h1>
-							<Link to="/">Chance and Morgan</Link>
-						</h1>
+						<Link to="/">
+							<p>Chance and Morgan</p>
+						</Link>
 						<nav className="flex items-center justify-center" aria-label="main">
 							<ul className="flex flex-wrap items-center justify-end gap-x-4 gap-y-1">
 								{[
