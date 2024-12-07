@@ -1,0 +1,27 @@
+@import url("./fonts.css");
+@import url("./colors.css");
+@import url("./resets.css");
+@import url("./styles.css");
+@import url("./utils.css");
+
+/* misc stuff */
+[data-popover] {
+	--duration: 75ms;
+	transition:
+		opacity var(--duration) ease-in,
+		translate var(--duration) ease-in,
+		display var(--duration) ease-in;
+	transition-behavior: allow-discrete;
+}
+
+[data-popover][data-state="open"] {
+	opacity: 1;
+	translate: 0 0;
+}
+
+@starting-style {
+	[data-popover][data-state="open"] {
+		opacity: 0;
+		translate: 0 2px;
+	}
+}

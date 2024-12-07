@@ -1,0 +1,33 @@
+@font-face {
+	font-family: charlevoix;
+	src: url("/fonts/charlevoix-light.woff");
+	font-weight: 300;
+}
+
+@font-face {
+	font-family: charlevoix;
+	src: url("/fonts/charlevoix-regular.woff");
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: editorial-new;
+	src: url("/fonts/editorial-new-italic-variable.woff2")
+		format("woff2-variations");
+	font-weight: 100 900;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: editorial-new;
+	src: url("/fonts/editorial-new-variable.woff2") format("woff2-variations");
+	font-weight: 100 800;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: mori;
+	src: url("/fonts/mori-variable.woff2") format("woff2-variations");
+	font-weight: 100 800;
+	font-display: swap;
+}

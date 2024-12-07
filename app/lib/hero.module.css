@@ -1,0 +1,73 @@
+.hero {
+	--_overlay-opacity: 0.6;
+	--_gutter: 0;
+	display: grid;
+	grid-template: "inner" 1fr / 1fr;
+	position: relative;
+	isolation: isolate;
+	outline: 4px solid var(--color-bg);
+	color: var(--color-white);
+	box-shadow: 0 0.2rem 4rem -1rem hsl(0 0% 0% / 0.6);
+	margin-inline: auto;
+	inline-size: calc(100% - var(--_gutter) * 2);
+
+	&:where(.halfSize) {
+		min-block-size: max(16rem, calc(var(--size-dvh) / 2 - var(--size-header)));
+	}
+
+	&:where(.fullSize) {
+		min-block-size: max(
+			36rem,
+			calc(var(--size-dvh) - var(--size-header) - var(--_gutter))
+		);
+	}
+
+	&::before {
+		content: "";
+		display: block;
+		position: relative;
+		grid-area: inner;
+		block-size: 100%;
+		inline-size: 100%;
+		background-color: hsl(0 0% 0% / var(--_overlay-opacity));
+		pointer-events: none;
+		z-index: 1;
+	}
+}
+
+.inner {
+	position: relative;
+	grid-area: inner;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding-block: var(--space-6);
+	block-size: 100%;
+	inline-size: 100%;
+	overflow: hidden;
+	padding: var(--space-gutter);
+	z-index: 1;
+}
+
+.image {
+	grid-area: inner;
+	z-index: -1;
+	overflow: hidden;
+}
+
+.imageInner {
+	position: absolute;
+	inset: 50%;
+	transform: translate(-50%, -50%);
+	block-size: 100%;
+	inline-size: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+.withGutters {
+	--_gutter: var(--space-gutter);
+	margin-inline: var(--_gutter);
+	margin-block-end: var(--_gutter);
+}

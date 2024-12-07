@@ -1,0 +1,76 @@
+.popper {
+	padding: 1rem;
+}
+
+.heading {
+	font-size: var(--fz-lg);
+	line-height: var(--lh-lg);
+	margin-bottom: var(--space-2);
+	font-family: var(--ff-serif);
+	text-align: center;
+}
+
+.buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	@media (--md) {
+		flex-direction: row;
+		gap: 0.75rem;
+	}
+}
+
+.popover {
+	--_bg-color: var(--color-white);
+	--_border-color: var(--color-gray-8);
+	--_border-size: 1px;
+	background-color: var(--_bg-color);
+	box-shadow: var(--shadow-lg);
+	border: var(--_border-size) solid var(--_border-color);
+	border-radius: 0.25rem;
+	&:where([data-placement="top"]) {
+		margin-bottom: 0.75rem;
+	}
+	&:where([data-placement="bottom"]) {
+		margin-top: 0.75rem;
+	}
+	&:where([data-placement="left"]) {
+		margin-right: 0.75rem;
+	}
+	&:where([data-placement="right"]) {
+		margin-left: 0.75rem;
+	}
+}
+
+.arrow {
+	position: absolute;
+	fill: var(--_bg-color);
+	stroke-width: var(--_border-size);
+	stroke: var(--_border-color);
+	width: 1rem;
+	height: 1rem;
+	&:where([data-placement="top"]) {
+		top: 100%;
+		translate: -50%;
+	}
+	&:where([data-placement="bottom"]) {
+		bottom: 100%;
+		translate: -50%;
+		rotate: 180deg;
+	}
+	&:where([data-placement="left"]) {
+		left: 100%;
+		translate: 0 -50%;
+		rotate: -90deg;
+	}
+	&:where([data-placement="right"]) {
+		right: 100%;
+		translate: 0 -50%;
+		rotate: 90deg;
+	}
+}
+
+.overlay {
+	position: fixed;
+	inset: 0;
+}

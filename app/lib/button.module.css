@@ -1,0 +1,98 @@
+.buttonImpl {
+	--_fg: inherit;
+	--_fg-hover: var(--_fg);
+	--_fg-active: var(--_fg);
+	--_bg: transparent;
+	--_bg-hover: var(--_bg);
+	--_bg-active: var(--_bg);
+	--_font-size: var(--fz-sm);
+	--_block-size: 2.375rem;
+	--_pad-block: var(--space-3);
+	--_pad-inline: var(--space-5);
+	--_focus-ring-color: var(--color-green-9);
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--_bg);
+	color: var(--_fg);
+	padding-block: var(--_pad-block);
+	padding-inline: var(--_pad-inline);
+	block-size: var(--_block-size);
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	text-align: center;
+	user-select: none;
+	transition-property: color, background-color, border-color,
+		text-decoration-color, transform;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 300ms;
+	font-family: var(--ff-title);
+	font-size: var(--_font-size);
+	line-height: 1;
+	transform: translate(0, 0);
+	outline: 0;
+
+	@media (--md) {
+		--_block-size: 3rem;
+		--_font-size: var(--fz-base);
+	}
+
+	@media (--hover) {
+		&:hover {
+			background-color: var(--_bg-hover);
+			color: var(--_fg-hover);
+			transform: translate(0, -1px);
+		}
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--_focus-ring-color);
+		outline-offset: 2px;
+	}
+
+	&:active {
+		background-color: var(--_bg-active);
+		color: var(--_fg-active);
+		transform: translate(0, 1px);
+	}
+
+	&:where(.primary) {
+		--_bg: var(--color-green-9);
+		--_bg-hover: var(--color-green-10);
+		--_bg-active: var(--color-green-11);
+		--_fg: var(--color-white);
+		&:where(.glassy) {
+			--_bg: var(--color-green-a9);
+		}
+	}
+
+	&:where(.secondary) {
+		--_bg: var(--color-gray-12);
+		--_bg-hover: var(--color-black);
+		--_bg-active: var(--color-black);
+		--_fg: var(--color-white);
+		&:where(.glassy) {
+			--_bg: var(--color-gray-a11);
+		}
+	}
+
+	&:where(.md) {
+		--_font-size: var(--fz-sm);
+		--_block-size: 2.375rem;
+		@media (--md) {
+			--_block-size: 3rem;
+			--_font-size: var(--fz-base);
+		}
+	}
+
+	&:where(.lg) {
+		--_font-size: var(--fz-base);
+		--_block-size: 3rem;
+		--_pad-block: var(--space-4);
+		@media (--md) {
+			--_block-size: 3.75rem;
+			--_font-size: var(--fz-xl);
+			--_pad-block: var(--space-5);
+		}
+	}
+}

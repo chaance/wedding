@@ -1,0 +1,60 @@
+.heading {
+	&:where([data-level="1"]) {
+		font-family: var(--ff-serif);
+		font-weight: 200;
+		font-size: var(--fz-3xl);
+		line-height: var(--lh-3xl);
+		font-style: italic;
+		@media (--xs) {
+			font-size: var(--fz-4xl);
+			line-height: var(--lh-4xl);
+		}
+		@media (--sm) {
+			font-size: var(--fz-5xl);
+			line-height: var(--lh-5xl);
+		}
+		@media (--md) {
+			font-size: var(--fz-6xl);
+			line-height: var(--lh-6xl);
+		}
+		@media (--xl) {
+			font-size: var(--fz-7xl);
+			line-height: var(--lh-7xl);
+		}
+	}
+
+	&:where([data-level="2"]) {
+		font-family: var(--ff-serif);
+		font-size: var(--fz-2xl);
+		line-height: var(--lh-2xl);
+		@media (--md) {
+			font-size: var(--fz-3xl);
+			line-height: var(--lh-3xl);
+		}
+	}
+
+	&:where([data-level="3"]) {
+		font-family: var(--ff-serif);
+		font-size: var(--fz-lg);
+		line-height: var(--lh-lg);
+		@media (--md) {
+			font-size: var(--fz-xl);
+			line-height: var(--lh-xl);
+		}
+	}
+
+	&:where([data-level="4"]) {
+		font-size: var(--fz-base);
+		line-height: var(--lh-base);
+	}
+
+	&:where([data-level="5"]) {
+		font-size: var(--fz-sm);
+		line-height: var(--lh-sm);
+	}
+
+	&:where([data-level="6"]) {
+		font-size: var(--fz-sm);
+		line-height: var(--lh-sm);
+	}
+}

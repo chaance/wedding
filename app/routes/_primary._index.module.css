@@ -1,0 +1,149 @@
+.main {
+	block-size: 100%;
+	inline-size: 100%;
+}
+
+.heroContent {
+	margin-inline: auto;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-3);
+	@media (--md) {
+		gap: var(--space-4);
+	}
+}
+
+.heroTitle {
+	position: relative;
+	font-size: 1.875rem;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-family: var(--ff-title);
+	font-weight: var(--fw-thin);
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+	text-wrap: nowrap;
+	flex-wrap: nowrap;
+
+	@media (--sm) {
+		font-size: 2.25rem;
+	}
+
+	@media (--md) {
+		font-size: 3.75rem;
+		margin-block-end: var(--space-1);
+	}
+
+	@media (--lg) {
+		font-size: 4.5rem;
+	}
+
+	& svg {
+		height: 3.25em;
+		position: absolute;
+		inset: 50%;
+		transform: translate(-50%, -40%);
+		z-index: -1;
+		fill: currentColor;
+		opacity: 0.6;
+		mix-blend-mode: hard-light;
+		color: var(--color-green-9);
+	}
+}
+
+.heroContentBody {
+	position: relative;
+	font-style: italic;
+	font-family: var(--ff-serif);
+	font-weight: 200;
+	font-size: var(--fz-lg);
+	line-height: var(--lh-lg);
+	text-wrap: balance;
+	margin-inline: auto;
+	@media (--md) {
+		max-inline-size: 34rem;
+		font-size: var(--fz-xl);
+		line-height: var(--lh-xl);
+	}
+	@media (--lg) {
+		max-inline-size: 46rem;
+		font-size: var(--fz-3xl);
+		line-height: var(--lh-3xl);
+	}
+
+	&::before,
+	&::after {
+		--_offset: 0;
+		position: absolute;
+		block-size: 1px;
+		background-color: currentColor;
+		opacity: 0.5;
+		@media (--md) {
+			--_offset: 3.5rem;
+			content: "";
+			inline-size: 3.5rem;
+		}
+		@media (--lg) {
+			--_offset: 4.5rem;
+			inline-size: 4rem;
+		}
+		@media (--xl) {
+			--_offset: 9rem;
+			inline-size: 6rem;
+		}
+		@media (--2xl) {
+			inline-size: 8rem;
+		}
+	}
+
+	&::before {
+		inset-block-start: 50%;
+		inset-inline-start: calc(-1 * var(--_offset));
+	}
+
+	&::after {
+		inset-block-end: 50%;
+		inset-inline-end: calc(-1 * var(--_offset));
+	}
+}
+
+.heroContentList {
+	display: flex;
+	gap: var(--space-4);
+	justify-content: center;
+	align-items: center;
+	font-family: var(--ff-serif);
+	margin-inline: auto;
+	@media (--sm) {
+		gap: var(--space-8);
+	}
+}
+
+.heroContentItem,
+:where(.heroContentItem) * {
+	display: flex;
+	align-items: center;
+	/* compensate for the typography's visual height */
+	margin-block-end: var(--space-1);
+}
+
+.heroButtons {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+	justify-content: center;
+	align-items: center;
+
+	@media (--md) {
+		flex-direction: row;
+		gap: var(--space-6);
+	}
+}
+
+.heroButton {
+	@media (--sm-down) {
+		inline-size: 100%;
+	}
+}
