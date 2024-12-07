@@ -11,7 +11,7 @@ import type { AriaPopoverProps } from "react-aria";
 import type { OverlayTriggerState, OverlayTriggerProps } from "react-stately";
 import { useOverlayTriggerState } from "react-stately";
 import { ButtonAnchor } from "./button";
-import styles from "./calendar-popper.module.css";
+import cx from "clsx";
 
 interface CalendarLink extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 	label: string;
@@ -41,12 +41,23 @@ export function CalendarPopper({
 	let { buttonProps: rsvpButtonProps } = useButton(triggerProps, triggerRef);
 	return (
 		<>
-			{trigger({ props: rsvpButtonProps, ref: triggerRef })}
+			{trigger({
+				props: {
+					...rsvpButtonProps,
+					className: cx(
+						rsvpButtonProps.className,
+						"comp-CalendarPopper__trigger",
+					),
+				},
+				ref: triggerRef,
+			})}
 			{state.isOpen && (
 				<Popover placement="top" triggerRef={triggerRef} state={state}>
-					<div {...overlayProps} className={styles.popper}>
-						<h2 className={styles.heading}>Add to your calendar</h2>
-						<div className={styles.buttons}>
+					<div {...overlayProps} className="comp-CalendarPopper__popper">
+						<h2 className="comp-CalendarPopper__heading">
+							Add to your calendar
+						</h2>
+						<div className="comp-CalendarPopper__buttons">
 							{calendarLinks.map(({ label, ...props }) => (
 								<ButtonAnchor
 									key={label}
@@ -85,7 +96,7 @@ function Popover({ children, state, offset = 8, ...props }: PopoverProps) {
 
 	return (
 		<Overlay>
-			<div {...underlayProps} className={styles.overlay} />
+			<div {...underlayProps} className="comp-CalendarPopper__overlay" />
 			<Wrapper contain restoreFocus autoFocus>
 				<div
 					tabIndex={-1}
@@ -94,11 +105,11 @@ function Popover({ children, state, offset = 8, ...props }: PopoverProps) {
 					data-popover=""
 					data-state={state.isOpen ? "open" : "closed"}
 					data-placement={placement}
-					className={styles.popover}
+					className="comp-CalendarPopper__popover"
 				>
 					<svg
 						{...arrowProps}
-						className={styles.arrow}
+						className="comp-CalendarPopper__popoverArrow"
 						data-placement={placement}
 						viewBox="0 0 12 12"
 						stroke="1"

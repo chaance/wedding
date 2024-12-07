@@ -1,7 +1,6 @@
 import * as React from "react";
 import { type LinkProps, Link } from "react-router";
 import cx from "clsx";
-import styles from "./button.module.css";
 
 interface ButtonCommonProps {
 	variant?: ButtonVariant;
@@ -29,13 +28,10 @@ const ButtonImpl = React.forwardRef<any, ButtonImplProps>(function ButtonImpl(
 	return (
 		<Component
 			{...props}
-			className={cx(className, styles.buttonImpl, {
-				[styles.primary]: variant === "primary",
-				[styles.secondary]: variant === "secondary",
-				[styles.md]: size === "md",
-				[styles.lg]: size === "lg",
-				[styles.glassy]: glassy,
-			})}
+			className={cx(className, "comp-Button")}
+			data-variant={variant}
+			data-size={size}
+			data-glassy={glassy || undefined}
 			ref={forwardedRef}
 		/>
 	);
@@ -48,31 +44,16 @@ export interface ButtonProps
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-	function Button({ type = "button", className, ...props }, forwardedRef) {
-		return (
-			<ButtonImpl
-				{...props}
-				className={cx(styles.button, className)}
-				ref={forwardedRef}
-				type={type}
-				as="button"
-			/>
-		);
+	function Button({ type = "button", ...props }, forwardedRef) {
+		return <ButtonImpl {...props} ref={forwardedRef} type={type} as="button" />;
 	},
 );
 
 export interface ButtonLinkProps extends ButtonCommonProps, LinkProps {}
 
 export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
-	function ButtonLink({ className, ...props }, forwardedRef) {
-		return (
-			<ButtonImpl
-				{...props}
-				className={cx(styles.buttonLink, className)}
-				ref={forwardedRef}
-				as={Link}
-			/>
-		);
+	function ButtonLink(props, forwardedRef) {
+		return <ButtonImpl {...props} ref={forwardedRef} as={Link} />;
 	},
 );
 
@@ -83,15 +64,8 @@ export interface ButtonAnchorProps
 export const ButtonAnchor = React.forwardRef<
 	HTMLAnchorElement,
 	ButtonAnchorProps
->(function ButtonAnchor({ className, ...props }, forwardedRef) {
-	return (
-		<ButtonImpl
-			{...props}
-			className={cx(styles.buttonLink, className)}
-			ref={forwardedRef}
-			as="a"
-		/>
-	);
+>(function ButtonAnchor(props, forwardedRef) {
+	return <ButtonImpl {...props} ref={forwardedRef} as="a" />;
 });
 
 export type ButtonSize = "md" | "lg";

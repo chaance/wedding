@@ -1,4 +1,4 @@
-.hero {
+.comp-Hero {
 	--_overlay-opacity: 0.6;
 	--_gutter: 0;
 	display: grid;
@@ -11,15 +11,21 @@
 	margin-inline: auto;
 	inline-size: calc(100% - var(--_gutter) * 2);
 
-	&:where(.halfSize) {
+	&:where([data-size="half"]) {
 		min-block-size: max(16rem, calc(var(--size-dvh) / 2 - var(--size-header)));
 	}
 
-	&:where(.fullSize) {
+	&:where([data-size="full"]) {
 		min-block-size: max(
 			36rem,
 			calc(var(--size-dvh) - var(--size-header) - var(--_gutter))
 		);
+	}
+
+	&:where([data-gutters]) {
+		--_gutter: var(--space-gutter);
+		margin-inline: var(--_gutter);
+		margin-block-end: var(--_gutter);
 	}
 
 	&::before {
@@ -35,7 +41,7 @@
 	}
 }
 
-.inner {
+.comp-Hero__inner {
 	position: relative;
 	grid-area: inner;
 	display: flex;
@@ -50,13 +56,13 @@
 	z-index: 1;
 }
 
-.image {
+.comp-Hero__image {
 	grid-area: inner;
 	z-index: -1;
 	overflow: hidden;
 }
 
-.imageInner {
+.comp-Hero__imageInner {
 	position: absolute;
 	inset: 50%;
 	transform: translate(-50%, -50%);
@@ -64,10 +70,4 @@
 	inline-size: 100%;
 	object-fit: cover;
 	object-position: center;
-}
-
-.withGutters {
-	--_gutter: var(--space-gutter);
-	margin-inline: var(--_gutter);
-	margin-block-end: var(--_gutter);
 }

@@ -1,8 +1,8 @@
-.popper {
+.comp-CalendarPopper__popper {
 	padding: 1rem;
 }
 
-.heading {
+.comp-CalendarPopper__heading {
 	font-size: var(--fz-lg);
 	line-height: var(--lh-lg);
 	margin-bottom: var(--space-2);
@@ -10,7 +10,7 @@
 	text-align: center;
 }
 
-.buttons {
+.comp-CalendarPopper__buttons {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
@@ -20,14 +20,21 @@
 	}
 }
 
-.popover {
+.comp-CalendarPopper__popover {
 	--_bg-color: var(--color-white);
 	--_border-color: var(--color-gray-8);
 	--_border-size: 1px;
+	--_duration: 75ms;
 	background-color: var(--_bg-color);
 	box-shadow: var(--shadow-lg);
 	border: var(--_border-size) solid var(--_border-color);
 	border-radius: 0.25rem;
+	transition:
+		opacity var(--_duration) ease-in,
+		translate var(--_duration) ease-in,
+		display var(--_duration) ease-in;
+	transition-behavior: allow-discrete;
+
 	&:where([data-placement="top"]) {
 		margin-bottom: 0.75rem;
 	}
@@ -40,9 +47,27 @@
 	&:where([data-placement="right"]) {
 		margin-left: 0.75rem;
 	}
+
+	/* misc stuff */
+
+	&:where([data-state="open"]) {
+		opacity: 1;
+		translate: 0 0;
+		@starting-style {
+			opacity: 0;
+			translate: 0 2px;
+		}
+	}
 }
 
-.arrow {
+/* @starting-style {
+	.comp-CalendarPopper__popover:where([data-state="open"]) {
+		opacity: 0;
+		translate: 0 2px;
+	}
+} */
+
+.comp-CalendarPopper__popoverArrow {
 	position: absolute;
 	fill: var(--_bg-color);
 	stroke-width: var(--_border-size);
@@ -70,7 +95,7 @@
 	}
 }
 
-.overlay {
+.comp-CalendarPopper__overlay {
 	position: fixed;
 	inset: 0;
 }

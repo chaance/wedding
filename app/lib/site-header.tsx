@@ -1,7 +1,6 @@
 import * as React from "react";
 import { NavLink } from "react-router";
 import * as NavDialog from "~/lib/nav-dialog";
-import styles from "./site-header.module.css";
 import cx from "clsx";
 
 let links = [
@@ -12,10 +11,10 @@ let links = [
 
 export function SiteHeader({ className }: { className?: string }) {
 	return (
-		<header className={cx(styles.header, className)}>
-			<NavLink to="/" className={styles.mark}>
+		<header className={cx("comp-SiteHeader", className)}>
+			<NavLink to="/" className="comp-SiteHeader__mark">
 				<div className="sr-only">Homepage</div>
-				<div aria-hidden className={styles.markText}>
+				<div aria-hidden className="comp-SiteHeader__markText">
 					<span>C</span>
 					<svg aria-hidden>
 						<use href="#icon-amp" />
@@ -24,7 +23,7 @@ export function SiteHeader({ className }: { className?: string }) {
 				</div>
 			</NavLink>
 
-			<nav aria-label="primary" className={styles.desktopNav}>
+			<nav aria-label="primary" className="comp-SiteHeader__desktopNav">
 				<NavList>
 					{links.map((link) => (
 						<NavItem key={link.text} to={link.to}>
@@ -45,7 +44,7 @@ function NavigationDialog() {
 			<NavDialog.Trigger>
 				<button
 					type="button"
-					className={styles.navTrigger}
+					className="comp-SiteHeader__navTrigger"
 					title="Toggle navigation"
 				>
 					<span className="sr-only">Open navigation</span>
@@ -60,7 +59,7 @@ function NavigationDialog() {
 				</button>
 			</NavDialog.Trigger>
 			<NavDialog.Content aria-label="site navigation">
-				<nav aria-label="primary" className={styles.mobileNav}>
+				<nav aria-label="primary" className="comp-SiteHeader__mobileNav">
 					<NavList>
 						{links.map((link) => (
 							<NavItem key={link.text} to={link.to}>
@@ -84,15 +83,15 @@ function isUrl(url: string) {
 }
 
 function NavList({ children }: { children: React.ReactNode }) {
-	return <ul className={styles.navList}>{children}</ul>;
+	return <ul className="comp-SiteHeader__navList">{children}</ul>;
 }
 
 function NavItem({ to, children }: { to: string; children: React.ReactNode }) {
 	return (
-		<li className={styles.navItem}>
+		<li className="comp-SiteHeader__navItem">
 			{isUrl(to) ? (
 				<a
-					className={styles.navLink}
+					className="comp-SiteHeader__navLink"
 					href={to}
 					rel="noreferrer"
 					target="_blank"
@@ -100,7 +99,7 @@ function NavItem({ to, children }: { to: string; children: React.ReactNode }) {
 					{children}
 				</a>
 			) : (
-				<NavLink className={styles.navLink} to={to}>
+				<NavLink className="comp-SiteHeader__navLink" to={to}>
 					{children}
 				</NavLink>
 			)}

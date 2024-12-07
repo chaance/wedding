@@ -1,4 +1,4 @@
-.buttonImpl {
+.comp-Button {
 	--_fg: inherit;
 	--_fg-hover: var(--_fg);
 	--_fg-active: var(--_fg);
@@ -56,27 +56,27 @@
 		transform: translate(0, 1px);
 	}
 
-	&:where(.primary) {
+	&:where([data-variant="primary"]) {
 		--_bg: var(--color-green-9);
 		--_bg-hover: var(--color-green-10);
 		--_bg-active: var(--color-green-11);
 		--_fg: var(--color-white);
-		&:where(.glassy) {
+		&:where([data-glassy]) {
 			--_bg: var(--color-green-a9);
 		}
 	}
 
-	&:where(.secondary) {
+	&:where([data-variant="secondary"]) {
 		--_bg: var(--color-gray-12);
 		--_bg-hover: var(--color-black);
 		--_bg-active: var(--color-black);
 		--_fg: var(--color-white);
-		&:where(.glassy) {
+		&:where([data-glassy]) {
 			--_bg: var(--color-gray-a11);
 		}
 	}
 
-	&:where(.md) {
+	&:where([data-size="md"]) {
 		--_font-size: var(--fz-sm);
 		--_block-size: 2.375rem;
 		@media (--md) {
@@ -85,7 +85,7 @@
 		}
 	}
 
-	&:where(.lg) {
+	&:where([data-size="lg"]) {
 		--_font-size: var(--fz-base);
 		--_block-size: 3rem;
 		--_pad-block: var(--space-4);

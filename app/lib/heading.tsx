@@ -1,6 +1,5 @@
 import cx from "clsx";
 import * as React from "react";
-import styles from "./heading.module.css";
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -22,7 +21,7 @@ export const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
 				{...props}
 				ref={forwardedRef}
 				data-level={level}
-				className={cx(styles.heading, props.className)}
+				className={cx("comp-Heading", props.className)}
 			>
 				{children}
 			</Component>

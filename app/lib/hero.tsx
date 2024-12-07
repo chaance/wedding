@@ -1,6 +1,5 @@
 import * as React from "react";
 import cx from "clsx";
-import styles from "./hero.module.css";
 
 type ImageSourceType = "image/avif" | "image/jpeg";
 
@@ -29,22 +28,19 @@ export function Hero({
 	}
 	return (
 		<div
-			className={cx(
-				styles.hero,
-				gutters && styles.withGutters,
-				styles[`${size}Size`],
-				className,
-			)}
+			className={cx("comp-Hero", className)}
+			data-size={size}
+			data-gutters={gutters || undefined}
 		>
-			<picture className={styles.image}>
+			<picture className="comp-Hero__image">
 				{imgSources.map(({ src, media, type }) => (
 					<React.Fragment key={src + media}>
 						<source srcSet={src} media={media} type={type} />
 					</React.Fragment>
 				))}
-				<img className={styles.imageInner} src={fallback.src} alt="" />
+				<img className="comp-Hero__imageInner" src={fallback.src} alt="" />
 			</picture>
-			<div className={styles.inner}>{children}</div>
+			<div className="comp-Hero__inner">{children}</div>
 		</div>
 	);
 }

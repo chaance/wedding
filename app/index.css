@@ -1,27 +1,14 @@
-@import url("./fonts.css");
-@import url("./colors.css");
-@import url("./resets.css");
-@import url("./styles.css");
-@import url("./utils.css");
+@layer defs, resets, base, routes, components, utils;
 
-/* misc stuff */
-[data-popover] {
-	--duration: 75ms;
-	transition:
-		opacity var(--duration) ease-in,
-		translate var(--duration) ease-in,
-		display var(--duration) ease-in;
-	transition-behavior: allow-discrete;
-}
+@import url("./fonts.css") layer(defs);
+@import url("./colors.css") layer(defs);
+@import url("./resets.css") layer(resets);
+@import url("./styles.css") layer(base);
+@import url("./utils.css") layer(utils);
 
-[data-popover][data-state="open"] {
-	opacity: 1;
-	translate: 0 0;
-}
-
-@starting-style {
-	[data-popover][data-state="open"] {
-		opacity: 0;
-		translate: 0 2px;
-	}
-}
+@import url("./lib/button.css") layer(components.button);
+@import url("./lib/calendar-popper.css") layer(components.calendarPopper);
+@import url("./lib/heading.css") layer(components.heading);
+@import url("./lib/hero.css") layer(components.hero);
+@import url("./lib/nav-dialog.css") layer(components.navDialog);
+@import url("./lib/site-header.css") layer(components.siteHeader);

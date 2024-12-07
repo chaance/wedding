@@ -1,4 +1,4 @@
-.heading {
+.comp-Heading {
 	&:where([data-level="1"]) {
 		font-family: var(--ff-serif);
 		font-weight: 200;

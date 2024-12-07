@@ -1,6 +1,5 @@
 import type { ImageSource } from "~/lib/hero";
 import { Hero } from "~/lib/hero";
-import styles from "./_primary.accommodations.module.css";
 import { Heading } from "~/lib/heading";
 
 // prettier-ignore
@@ -26,10 +25,15 @@ let sources = [
 
 export default function Accommodations() {
 	return (
-		<main className={styles.main}>
+		<main className="rte-Accommodations">
 			<Hero gutters imgSources={sources} size="half">
-				<div className={styles.heroContent}>
-					<Heading as="h1" level={1} className={styles.heroTitle}>
+				<div className="rte-Accommodations__heroContent">
+					<Heading
+						as="h1"
+						level={1}
+						// className={styles.heroTitle}
+						className="rte-Accommodations__heroTitle"
+					>
 						Accommodations
 					</Heading>
 				</div>

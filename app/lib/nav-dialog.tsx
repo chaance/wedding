@@ -1,5 +1,4 @@
 import * as React from "react";
-import styles from "./nav-dialog.module.css";
 import cx from "clsx";
 import { RemoveScroll } from "react-remove-scroll";
 import { useComposedRefs } from "@chance/hooks/use-composed-refs";
@@ -78,7 +77,7 @@ function NavDialogTrigger(props: NavDialogTriggerProps) {
 	return React.cloneElement(child, {
 		type: child.type === "button" ? "button" : undefined,
 		onClick: state.open,
-		className: cx(child.props.className, styles.trigger),
+		className: cx(child.props.className, "comp-NavDialog__trigger"),
 	});
 }
 
@@ -98,12 +97,16 @@ const NavDialogContent = React.forwardRef<
 	return (
 		<Portal>
 			<RemoveScroll enabled={isOpen}>
-				<dialog ref={ref} className={cx(styles.dialog, className)} {...props}>
+				<dialog
+					ref={ref}
+					className={cx("comp-NavDialog", className)}
+					{...props}
+				>
 					{children}
 					<button
 						type="button"
 						onClick={close}
-						className={styles.closeButton}
+						className="comp-NavDialog__closeButton"
 						title="Close navigation"
 					>
 						<span className="sr-only">Close navigation</span>

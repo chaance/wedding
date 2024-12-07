@@ -1,4 +1,4 @@
-.dialog {
+.comp-NavDialog {
 	--_duration: 0.7s;
 	--_offset: 10px;
 	--_filter-open: blur(12px);
@@ -61,7 +61,7 @@
 	}
 }
 
-.closeButton {
+.comp-NavDialog__closeButton {
 	position: absolute;
 	top: 0.5rem;
 	right: 0.5rem;
@@ -80,7 +80,7 @@
 	}
 }
 
-.trigger {
+.comp-NavDialog__trigger {
 	height: 2rem;
 	width: 2rem;
 	display: flex;

@@ -5,8 +5,12 @@ import { useIsHydrated } from "@chance/hooks";
 import { Hero, type ImageSource } from "~/lib/hero";
 import { Button, ButtonLink } from "~/lib/button";
 import { CalendarPopper } from "~/lib/calendar-popper";
-import styles from "./_primary._index.module.css";
+import stylesheetUrl from "./_primary._index.css?url";
 import type { Route } from "./+types/_primary._index";
+
+export const links: Route.LinksFunction = () => [
+	{ rel: "stylesheet", href: stylesheetUrl },
+];
 
 export async function loader(_args: Route.LoaderArgs) {
 	const wedding: CalendarLink.CalendarEvent = {
@@ -24,7 +28,7 @@ export async function loader(_args: Route.LoaderArgs) {
 	};
 }
 
-export const meta = (_args: Route.MetaArgs): Route.MetaDescriptors => {
+export const meta: Route.MetaFunction = (_args) => {
 	return [
 		{ title: "New Remix App" },
 		{ name: "description", content: "Welcome to Remix!" },
@@ -62,23 +66,23 @@ export default function Index() {
 	let isHydrated = useIsHydrated();
 
 	return (
-		<main className={styles.main}>
+		<main className="rte-Home">
 			<Hero gutters imgSources={sources}>
-				<div className={styles.heroContent}>
-					<h1 className={styles.heroTitle}>
+				<div className="rte-Home__heroContent">
+					<h1 className="rte-Home__heroTitle">
 						Chance<em className="sr-only"> & </em>
 						<svg aria-hidden>
 							<use href="#icon-amp" />
 						</svg>
 						Morgan
 					</h1>
-					<p className={styles.heroContentBody}>
+					<p className="rte-Home__heroContentBody">
 						After eight good years, we're doing the damn thing! Join us for a
 						celebration of love and friendship as we start this new chapter.
 					</p>
 
-					<div className={styles.heroContentDetails}>
-						<dl className={styles.heroContentList}>
+					<div className="rte-Home__heroContentDetails">
+						<dl className="rte-Home__heroContentList">
 							{[
 								{ title: "Date", desc: "May 10, 2025" },
 								{
@@ -95,19 +99,19 @@ export default function Index() {
 								},
 							].map(({ title, desc }) => {
 								return (
-									<div key={title} className={styles.heroContentItem}>
+									<div key={title} className="rte-Home__heroContentItem">
 										<dt className="sr-only">{title}</dt>
-										<dd className={styles.heroContentDesc}>{desc}</dd>
+										<dd className="rte-Home__heroContentDesc">{desc}</dd>
 									</div>
 								);
 							})}
 						</dl>
 					</div>
-					<div className={styles.heroButtons}>
+					<div className="rte-Home__heroButtons">
 						<ButtonLink
 							to="/rsvp"
 							ref={rsvpButtonRef}
-							className={styles.heroButton}
+							className="rte-Home__heroButton"
 							size="lg"
 							glassy
 						>
@@ -119,7 +123,7 @@ export default function Index() {
 									<Button
 										ref={ref}
 										type="button"
-										className={styles.heroButton}
+										className="rte-Home__heroButton"
 										size="lg"
 										glassy
 										{...props}
@@ -140,7 +144,7 @@ export default function Index() {
 						) : (
 							<ButtonLink
 								to={ics}
-								className={styles.heroButton}
+								className="rte-Home__heroButton"
 								size="lg"
 								glassy
 								download="chance-morgan-wedding"
