@@ -4,16 +4,27 @@ import { RemoveScroll } from "react-remove-scroll";
 import { useComposedRefs } from "@chance/hooks/use-composed-refs";
 import { Portal } from "./portal";
 import { useEffectEvent } from "@chance/hooks";
-import { useLocation } from "react-router";
+import { useNavigation } from "react-router";
 
 function getStore(dialogElement: HTMLDialogElement | null) {
 	type State = { isOpen: boolean };
 	let state = { isOpen: false };
+	let listeners = new Set<() => void>();
 
 	function subscribe(callback: () => void): () => void {
+		listeners.add(callback);
 		if (!dialogElement) {
-			return () => void 0;
+			return () => {
+				listeners.delete(callback);
+			};
 		}
+
+		let update = (isOpen: boolean) => {
+			if (state.isOpen !== isOpen) {
+				state = { isOpen };
+				callback();
+			}
+		};
 
 		let observer = new MutationObserver((mutations) => {
 			let mutation = mutations.find(
@@ -23,22 +34,15 @@ function getStore(dialogElement: HTMLDialogElement | null) {
 				return;
 			}
 			let isOpen = (mutation.target as HTMLDialogElement).open;
-			if (state.isOpen !== isOpen) {
-				state = { isOpen };
-				callback();
-			}
+			update(isOpen);
 		});
 		observer.observe(dialogElement, { attributes: true });
-		let onClose = () => {
-			if (state.isOpen) {
-				state = { isOpen: false };
-				callback();
-			}
-		};
+		let onClose = () => update(false);
 		dialogElement.addEventListener("close", onClose);
 		return () => {
 			observer.disconnect();
 			dialogElement.removeEventListener("close", onClose);
+			listeners.delete(callback);
 		};
 	}
 
@@ -63,17 +67,23 @@ function getStore(dialogElement: HTMLDialogElement | null) {
 	}
 
 	function setIsOpen(action: boolean | ((prev: boolean) => boolean)) {
-		let nextState =
-			typeof action === "function" ? action(state.isOpen) : action;
-		if (state.isOpen !== nextState) {
-			state = { isOpen: nextState };
+		let isOpen = typeof action === "function" ? action(state.isOpen) : action;
+		if (state.isOpen !== isOpen) {
+			state = { isOpen: isOpen };
 			if (dialogElement) {
-				if (nextState) {
+				if (isOpen) {
 					dialogElement.showModal();
 				} else {
 					dialogElement.close();
 				}
 			}
+			emitChange();
+		}
+	}
+
+	function emitChange() {
+		for (let listener of listeners) {
+			listener();
 		}
 	}
 
@@ -130,14 +140,21 @@ function NavDialogRoot(props: { children: React.ReactNode }) {
 		getServerSnapshot,
 	);
 
-	let location = useLocation();
+	let navigation = useNavigation();
+	let navState = React.useRef(navigation.state);
 	React.useEffect(() => {
-		close();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [location.pathname]);
+		let previousNavState = navState.current;
+		navState.current = navigation.state;
+		if (
+			previousNavState !== navigation.state &&
+			// close once navigation is complete
+			navigation.state === "idle"
+		) {
+			close();
+		}
+	}, [navigation, close]);
 
 	useMatchMediaChange("(min-width: 768px)", (matches) => {
-		console.log("matches", matches);
 		if (matches) {
 			setIsOpen(false);
 		}
