@@ -14,9 +14,7 @@ export const links: Route.LinksFunction = () => [
 	{ rel: "stylesheet", href: stylesheetUrl },
 ];
 
-export async function loader(args: Route.LoaderArgs) {
-	const url = new URL(args.request.url);
-	const rootUrl = `${url.protocol}//${url.host}`;
+export async function loader() {
 	const wedding: CalendarLink.CalendarEvent = {
 		title: "Chance and Morgan's Wedding",
 		duration: [6, "hour"],
@@ -51,7 +49,6 @@ export async function loader(args: Route.LoaderArgs) {
 	}, []);
 
 	return {
-		rootUrl,
 		google: CalendarLink.google(wedding),
 		ics: CalendarLink.ics(wedding),
 		outlook: CalendarLink.outlook(wedding),
@@ -59,8 +56,8 @@ export async function loader(args: Route.LoaderArgs) {
 	};
 }
 
-export const meta: Route.MetaFunction = ({ data }) => {
-	return [...getMeta({ rootUrl: data.rootUrl })];
+export const meta: Route.MetaFunction = () => {
+	return [...getMeta()];
 };
 
 export default function Index() {

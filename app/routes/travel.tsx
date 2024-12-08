@@ -38,8 +38,8 @@ export async function loader(args: Route.LoaderArgs) {
 	return { rootUrl, sources, suggestions };
 }
 
-export const meta: Route.MetaFunction = ({ data }) => {
-	return [...getMeta({ title: "Travel", rootUrl: data.rootUrl })];
+export const meta: Route.MetaFunction = () => {
+	return [...getMeta({ title: "Travel" })];
 };
 
 export default function Accommodations() {

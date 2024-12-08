@@ -31,8 +31,8 @@ export async function loader(args: Route.LoaderArgs) {
 	return { rootUrl, sources };
 }
 
-export const meta: Route.MetaFunction = ({ data }) => {
-	return [...getMeta({ title: "Accommodations", rootUrl: data.rootUrl })];
+export const meta: Route.MetaFunction = () => {
+	return [...getMeta({ title: "Accommodations" })];
 };
 
 export default function Accommodations() {

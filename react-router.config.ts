@@ -6,9 +6,9 @@ export default {
 	ssr: true,
 	prerender: [
 		// static paths to prerender
-		// "/",
-		// "/accommodations",
-		// "/travel",
-		// "/venue",
+		"/",
+		"/accommodations",
+		"/travel",
+		"/venue",
 	],
 } satisfies Config;

@@ -1,4 +1,4 @@
-import type { MetaDescriptor, MetaArgs } from "react-router";
+import type { MetaDescriptor } from "react-router";
 
 const DEFAULT_TITLE = "Chance + Morgan";
 const DEFAULT_DESCRIPTION =
@@ -7,12 +7,14 @@ const DEFAULT_DESCRIPTION =
 export const getMeta = ({
 	title = DEFAULT_TITLE,
 	description = DEFAULT_DESCRIPTION,
-	rootUrl,
 }: {
 	title?: string;
 	description?: string;
-	rootUrl: string;
-}): MetaDescriptor[] => {
+} = {}): MetaDescriptor[] => {
+	let rootUrl = import.meta.env.VITE_SITE_URL;
+	if (!rootUrl) {
+		throw new Error("Missing VITE_SITE_URL in import.meta.env");
+	}
 	title = title === DEFAULT_TITLE ? title : `${title} | ${DEFAULT_TITLE}`;
 	return [
 		{ title },
