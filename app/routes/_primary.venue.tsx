@@ -81,9 +81,9 @@ export default function Accommodations() {
 				</p>
 
 				<p>
-					We have secured a food truck operated by Southern California taco
-					artists grilling up some tasty tortilla-wrapped eats. They will glady
-					accommodate vegetarians, vegans, and omnivorous alike.
+					We have secured a food truck operated by genuine taco artists grilling
+					up some tasty tortilla-wrapped eats. They will glady accommodate
+					vegetarians, vegans, and omnivorous alike.
 				</p>
 			</div>
 		</main>
