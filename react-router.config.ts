@@ -5,10 +5,10 @@ export default {
 	// Server-side render by default, to enable SPA mode set this to `false`
 	ssr: true,
 	prerender: [
-		// static routes
-		"/",
-		"/accommodations",
-		"/travel",
-		"/venue",
+		// static paths to prerender
+		// "/",
+		// "/accommodations",
+		// "/travel",
+		// "/venue",
 	],
 } satisfies Config;
