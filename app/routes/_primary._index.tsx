@@ -25,11 +25,37 @@ export async function loader(args: Route.LoaderArgs) {
 		start: new Date("2025-05-10T12:00:00-05:00"),
 	};
 
+	// prettier-ignore
+	let sources = [
+		{ src: "1x1/600w",   media: "(max-width: 740px) and (orientation: portrait) and (max-resolution: 1.5dppx)" },
+		{ src: "1x1/1000w",  media: "(max-width: 740px) and (orientation: portrait)" },
+		{ src: "16x9/600w",  media: "(max-width: 740px) and (max-resolution: 1.5dppx)" },
+		{ src: "16x9/1000w", media: "(max-width: 740px)" },
+		{ src: "16x9/1000w", media: "(max-width: 1024px) and (max-resolution: 1.5dppx)" },
+		{ src: "16x9/1600w", media: "(max-width: 1024px)" },
+		{ src: "16x9/2000w" },
+	].reduce<ImageSource[]>((acc, { src, media }) => {
+		return [
+			...acc,
+			{
+				src: `/images/home-header-${src}.avif`,
+				media,
+				type: "image/avif"
+			},
+			{
+				src: `/images/home-header-${src}.jpg`,
+				media,
+				type: "image/jpeg"
+			},
+		];
+	}, []);
+
 	return {
 		rootUrl,
 		google: CalendarLink.google(wedding),
 		ics: CalendarLink.ics(wedding),
 		outlook: CalendarLink.outlook(wedding),
+		sources,
 	};
 }
 
@@ -37,33 +63,8 @@ export const meta: Route.MetaFunction = ({ data }) => {
 	return [...getMeta({ rootUrl: data.rootUrl })];
 };
 
-// prettier-ignore
-let sources = [
-	{ src: "1x1/600w",   media: "(max-width: 740px) and (orientation: portrait) and (max-resolution: 1.5dppx)" },
-	{ src: "1x1/1000w",  media: "(max-width: 740px) and (orientation: portrait)" },
-	{ src: "16x9/600w",  media: "(max-width: 740px) and (max-resolution: 1.5dppx)" },
-	{ src: "16x9/1000w", media: "(max-width: 740px)" },
-	{ src: "16x9/1000w", media: "(max-width: 1024px) and (max-resolution: 1.5dppx)" },
-	{ src: "16x9/1600w", media: "(max-width: 1024px)" },
-	{ src: "16x9/2000w" },
-].reduce<ImageSource[]>((acc, { src, media }) => {
-	return [
-		...acc,
-		{
-			src: `/images/home-header-${src}.avif`,
-			media,
-			type: "image/avif"
-		},
-		{
-			src: `/images/home-header-${src}.jpg`,
-			media,
-			type: "image/jpeg"
-		},
-	];
-}, []);
-
 export default function Index() {
-	let { google, ics, outlook } = useLoaderData<typeof loader>();
+	let { google, ics, outlook, sources } = useLoaderData<typeof loader>();
 	let rsvpButtonRef = React.useRef(null);
 	let isHydrated = useIsHydrated();
 

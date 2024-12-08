@@ -3,32 +3,32 @@ import { Hero } from "~/lib/hero";
 import { Heading } from "~/lib/heading";
 import type { Route } from "./+types/_primary.accommodations";
 import { getMeta } from "~/lib/meta";
-
-// prettier-ignore
-let sources = [
-	{ src: "16x9/800w",  media: "(max-width: 740px)" },
-	{ src: "16x9/1600w", media: "(max-width: 1024px)" },
-	{ src: "16x9/2000w" },
-].reduce<ImageSource[]>((acc, { src, media }) => {
-	return [
-		...acc,
-		{
-			src: `/images/accommodations-${src}.avif`,
-			media,
-			type: "image/avif"
-		},
-		{
-			src: `/images/accommodations-${src}.jpg`,
-			media,
-			type: "image/jpeg"
-		},
-	];
-}, []);
+import { useLoaderData } from "react-router";
 
 export async function loader(args: Route.LoaderArgs) {
 	const url = new URL(args.request.url);
 	const rootUrl = `${url.protocol}//${url.host}`;
-	return { rootUrl };
+	// prettier-ignore
+	let sources = [
+		{ src: "16x9/800w",  media: "(max-width: 740px)" },
+		{ src: "16x9/1600w", media: "(max-width: 1024px)" },
+		{ src: "16x9/2000w" },
+	].reduce<ImageSource[]>((acc, { src, media }) => {
+		return [
+			...acc,
+			{
+				src: `/images/accommodations-${src}.avif`,
+				media,
+				type: "image/avif"
+			},
+			{
+				src: `/images/accommodations-${src}.jpg`,
+				media,
+				type: "image/jpeg"
+			},
+		];
+	}, []);
+	return { rootUrl, sources };
 }
 
 export const meta: Route.MetaFunction = ({ data }) => {
@@ -36,6 +36,7 @@ export const meta: Route.MetaFunction = ({ data }) => {
 };
 
 export default function Accommodations() {
+	let { sources } = useLoaderData<typeof loader>();
 	return (
 		<main className="rte-Accommodations">
 			<Hero gutters imgSources={sources} size="half">
