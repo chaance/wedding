@@ -19,10 +19,12 @@ function getStore(dialogElement: HTMLDialogElement | null) {
 			let mutation = mutations.find(
 				(m) => m.type === "attributes" && m.attributeName === "open",
 			);
-			if (!mutation) return;
+			if (!mutation) {
+				return;
+			}
 			let isOpen = (mutation.target as HTMLDialogElement).open;
 			if (state.isOpen !== isOpen) {
-				state.isOpen = isOpen;
+				state = { isOpen };
 				callback();
 			}
 		});
