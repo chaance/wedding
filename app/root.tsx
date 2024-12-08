@@ -13,6 +13,13 @@ import stylesheetUrl from "./root.css?url";
 import { SiteHeader } from "./lib/site-header";
 import { SiteFooter } from "./lib/site-footer";
 
+export const headers: Route.HeadersFunction = () => {
+	return {
+		"Cache-Control": `public, max-age=${60 * 60 * 24 * 7}`,
+		Vary: "Cookie",
+	};
+};
+
 export const links: Route.LinksFunction = (): Route.LinkDescriptors => [
 	{
 		rel: "icon",
