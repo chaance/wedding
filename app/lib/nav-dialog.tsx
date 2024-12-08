@@ -29,8 +29,16 @@ function getStore(dialogElement: HTMLDialogElement | null) {
 			}
 		});
 		observer.observe(dialogElement, { attributes: true });
+		let onClose = () => {
+			if (state.isOpen) {
+				state = { isOpen: false };
+				callback();
+			}
+		};
+		dialogElement.addEventListener("close", onClose);
 		return () => {
 			observer.disconnect();
+			dialogElement.removeEventListener("close", onClose);
 		};
 	}
 
