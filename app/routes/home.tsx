@@ -6,8 +6,8 @@ import { useIsHydrated } from "@chance/hooks";
 import { Hero, type ImageSource } from "~/lib/hero";
 import { Button, ButtonLink } from "~/lib/button";
 import { CalendarPopper } from "~/lib/calendar-popper";
-import stylesheetUrl from "./_primary._index.css?url";
-import type { Route } from "./+types/_primary._index";
+import stylesheetUrl from "./home.css?url";
+import type { Route } from "./+types/home";
 import { getMeta } from "~/lib/meta";
 
 export const links: Route.LinksFunction = () => [

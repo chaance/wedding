@@ -12,7 +12,7 @@ export default defineConfig({
 			plugins: [
 				autoprefixer(),
 				postcssGlobalData({
-					files: [path.resolve(import.meta.dirname, "app/media.css")],
+					files: [path.resolve(import.meta.dirname, "app/styles/media.css")],
 				}),
 				postcssCustomMedia(),
 			],

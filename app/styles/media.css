@@ -1,3 +1,4 @@
+/* loaded as global data in postcss via vite.config */
 @custom-media --smallest (max-width: 389px);
 @custom-media --xs (min-width: 390px);
 @custom-media --xs-down (max-width: 639px);

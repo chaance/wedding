@@ -1,7 +1,7 @@
 import type { ImageSource } from "~/lib/hero";
 import { Hero } from "~/lib/hero";
 import { Heading } from "~/lib/heading";
-import type { Route } from "./+types/_primary.accommodations";
+import type { Route } from "./+types/accommodations";
 import { getMeta } from "~/lib/meta";
 import { useLoaderData } from "react-router";
 

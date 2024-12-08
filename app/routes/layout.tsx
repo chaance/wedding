@@ -1,8 +1,8 @@
 import { Outlet } from "react-router";
 import { SiteFooter } from "~/lib/site-footer";
 import { SiteHeader } from "~/lib/site-header";
-import stylesheetUrl from "./_primary.css?url";
-import type { Route } from "./+types/_primary";
+import stylesheetUrl from "./layout.css?url";
+import type { Route } from "./+types/layout";
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "stylesheet", href: stylesheetUrl },

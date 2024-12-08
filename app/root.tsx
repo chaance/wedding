@@ -9,7 +9,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import stylesheetUrl from "./index.css?url";
+import stylesheetUrl from "./root.css?url";
 import { SiteHeader } from "./lib/site-header";
 import { SiteFooter } from "./lib/site-footer";
 

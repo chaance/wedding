@@ -1,10 +1,10 @@
 @layer defs, resets, base, routes, components, utils;
 
-@import url("./fonts.css") layer(defs);
-@import url("./colors.css") layer(defs);
-@import url("./resets.css") layer(resets);
-@import url("./styles.css") layer(base);
-@import url("./utils.css") layer(utils);
+@import url("./styles/fonts.css") layer(defs);
+@import url("./styles/colors.css") layer(defs);
+@import url("./styles/resets.css") layer(resets);
+@import url("./styles/base.css") layer(base);
+@import url("./styles/utils.css") layer(utils);
 
 @import url("./lib/button.css") layer(components.button);
 @import url("./lib/calendar-popper.css") layer(components.calendarPopper);
