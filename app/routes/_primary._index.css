@@ -6,7 +6,6 @@
 
 	.rte-Home__heroContent {
 		margin-inline: auto;
-		text-align: center;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-3);
@@ -17,7 +16,7 @@
 
 	.rte-Home__heroTitle {
 		position: relative;
-		font-size: 1.875rem;
+		font-size: 1.25rem;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
 		font-family: var(--ff-title);
@@ -27,6 +26,9 @@
 		gap: 1em;
 		text-wrap: nowrap;
 		flex-wrap: nowrap;
+		@media (--xs) {
+			font-size: 1.625rem;
+		}
 
 		@media (--sm) {
 			font-size: 2.25rem;

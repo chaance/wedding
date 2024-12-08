@@ -1,5 +1,6 @@
 import {
 	isRouteErrorResponse,
+	Link,
 	Links,
 	Meta,
 	Outlet,
@@ -9,6 +10,8 @@ import {
 
 import type { Route } from "./+types/root";
 import stylesheetUrl from "./index.css?url";
+import { SiteHeader } from "./lib/site-header";
+import { SiteFooter } from "./lib/site-footer";
 
 export const links: Route.LinksFunction = (): Route.LinkDescriptors => [
 	{
@@ -81,7 +84,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	let stack: string | undefined;
 
 	if (isRouteErrorResponse(error)) {
-		message = error.status === 404 ? "404" : "Error";
+		message = error.status === 404 ? "404: Not Found" : "Error";
 		details =
 			error.status === 404
 				? "The requested page could not be found."
@@ -92,15 +95,20 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	}
 
 	return (
-		<main className="pt-16 p-4 container mx-auto">
-			<h1>{message}</h1>
-			<p>{details}</p>
-			{stack && (
-				<pre className="w-full p-4 overflow-x-auto">
-					<code>{stack}</code>
-				</pre>
-			)}
-		</main>
+		<div className="rte-Root-ErrorBoundary">
+			<SiteHeader className="rte-Root-ErrorBoundary__header" />
+			<main className="rte-Root-ErrorBoundary__main container prose">
+				<h1>{message}</h1>
+				<p>{details}</p>
+				<Link to="/">Go home</Link>
+				{stack && (
+					<pre>
+						<code>{stack}</code>
+					</pre>
+				)}
+			</main>
+			<SiteFooter />
+		</div>
 	);
 }
 

@@ -38,7 +38,11 @@
 	/* colors */
 	--color-bg: var(--color-gray-2);
 	--color-fg: var(--color-black);
-	--color-focus-ring: var(--color-green-9);
+	--color-primary: var(--color-green-9);
+	--color-link: var(--color-fg);
+	--color-link-decor: var(--color-primary);
+	--color-link-hover: var(--color-green-8);
+	--color-focus-ring: var(--color-primary);
 
 	/* spacing */
 	--space-1: 0.25rem;

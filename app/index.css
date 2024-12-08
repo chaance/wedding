@@ -12,3 +12,23 @@
 @import url("./lib/hero.css") layer(components.hero);
 @import url("./lib/nav-dialog.css") layer(components.navDialog);
 @import url("./lib/site-header.css") layer(components.siteHeader);
+
+@layer routes.root {
+	.rte-Root-ErrorBoundary {
+		block-size: 100%;
+		inline-size: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.rte-Root-ErrorBoundary__header {
+		flex: 0 0 auto;
+		inline-size: calc(100% - var(--space-gutter) * 2);
+	}
+
+	.rte-Root-ErrorBoundary__main {
+		text-align: center;
+		flex: 1 1 100%;
+		inline-size: 100%;
+	}
+}

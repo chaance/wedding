@@ -3,6 +3,79 @@ import cx from "clsx";
 import { RemoveScroll } from "react-remove-scroll";
 import { useComposedRefs } from "@chance/hooks/use-composed-refs";
 import { Portal } from "./portal";
+import { useEffectEvent } from "@chance/hooks";
+
+function getStore(dialogElement: HTMLDialogElement | null) {
+	type State = { isOpen: boolean };
+	let state = { isOpen: false };
+
+	function subscribe(callback: () => void): () => void {
+		if (!dialogElement) {
+			return () => void 0;
+		}
+
+		let observer = new MutationObserver((mutations) => {
+			let mutation = mutations.find(
+				(m) => m.type === "attributes" && m.attributeName === "open",
+			);
+			if (!mutation) return;
+			let isOpen = (mutation.target as HTMLDialogElement).open;
+			if (state.isOpen !== isOpen) {
+				state.isOpen = isOpen;
+				callback();
+			}
+		});
+		observer.observe(dialogElement, { attributes: true });
+		return () => {
+			observer.disconnect();
+		};
+	}
+
+	function getSnapshot(): State {
+		return state;
+	}
+
+	function getServerSnapshot() {
+		return state;
+	}
+
+	function open() {
+		setIsOpen(true);
+	}
+
+	function close() {
+		setIsOpen(false);
+	}
+
+	function toggle() {
+		setIsOpen((prev) => !prev);
+	}
+
+	function setIsOpen(action: boolean | ((prev: boolean) => boolean)) {
+		let nextState =
+			typeof action === "function" ? action(state.isOpen) : action;
+		if (state.isOpen !== nextState) {
+			state = { isOpen: nextState };
+			if (dialogElement) {
+				if (nextState) {
+					dialogElement.showModal();
+				} else {
+					dialogElement.close();
+				}
+			}
+		}
+	}
+
+	return {
+		subscribe,
+		open,
+		close,
+		toggle,
+		getSnapshot,
+		getServerSnapshot,
+		setIsOpen,
+	};
+}
 
 const NavDialogContext = React.createContext<{
 	setDialogElement: React.Dispatch<
@@ -30,37 +103,39 @@ function NavDialogRoot(props: { children: React.ReactNode }) {
 	let dialogRef = React.useRef<HTMLDialogElement | null>(null);
 	let [dialogElement, setDialogElement] =
 		React.useState<HTMLDialogElement | null>(null);
-	let { close, open, toggle } = React.useMemo(() => {
-		let close = () => dialogRef.current?.close();
-		let open = () => dialogRef.current?.showModal();
-		let toggle = () => {
-			if (!dialogRef.current) return;
-			if (dialogRef.current.open) {
-				dialogRef.current.close();
-			} else {
-				dialogRef.current.showModal();
-			}
-		};
-		return { close, open, toggle };
-	}, []);
 
-	let [isOpen, setIsOpen] = React.useState(false);
-	React.useEffect(() => {
-		if (!dialogElement) return;
-		let observer = new MutationObserver((mutations) => {
-			let mutation = mutations.find(
-				(m) => m.type === "attributes" && m.attributeName === "open",
-			);
-			if (!mutation) return;
-			let isOpen = (mutation.target as HTMLDialogElement).open;
-			setIsOpen(isOpen);
-		});
-		observer.observe(dialogElement, { attributes: true });
-	}, [dialogElement]);
+	let {
+		close,
+		getServerSnapshot,
+		getSnapshot,
+		open,
+		setIsOpen,
+		subscribe,
+		toggle,
+	} = React.useMemo(() => getStore(dialogElement), [dialogElement]);
+	let { isOpen } = React.useSyncExternalStore(
+		subscribe,
+		getSnapshot,
+		getServerSnapshot,
+	);
+
+	useMatchMediaChange("(min-width: 768px)", (matches) => {
+		console.log("matches", matches);
+		if (matches) {
+			setIsOpen(false);
+		}
+	});
 
 	return (
 		<NavDialogContext.Provider
-			value={{ isOpen, close, open, toggle, setDialogElement, dialogRef }}
+			value={{
+				isOpen,
+				close,
+				open,
+				toggle,
+				setDialogElement,
+				dialogRef,
+			}}
 		>
 			{props.children}
 		</NavDialogContext.Provider>
@@ -130,3 +205,18 @@ export {
 	NavDialogTrigger as Trigger,
 	NavDialogContent as Content,
 };
+
+function useMatchMediaChange(
+	rawQuery: string,
+	callback: (matches: boolean) => void,
+) {
+	let savedCallback = useEffectEvent(callback);
+	React.useEffect(() => {
+		let listener = (event: MediaQueryListEvent) => savedCallback(event.matches);
+		let mq = window.matchMedia(rawQuery);
+		mq.addEventListener("change", listener);
+		return () => {
+			mq.removeEventListener("change", listener);
+		};
+	}, [savedCallback, rawQuery]);
+}

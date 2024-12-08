@@ -5,6 +5,7 @@ import cx from "clsx";
 
 let links = [
 	{ to: "/rsvp", text: "RSVP" },
+	{ to: "/venue", text: "Venue" },
 	{ to: "/travel", text: "Travel Info" },
 	{ to: "/accommodations", text: "Accommodations" },
 ];
@@ -16,7 +17,7 @@ export function SiteHeader({ className }: { className?: string }) {
 				<div className="sr-only">Homepage</div>
 				<div aria-hidden className="comp-SiteHeader__markText">
 					<span>C</span>
-					<svg aria-hidden>
+					<svg>
 						<use href="#icon-amp" />
 					</svg>
 					<span>M</span>
@@ -58,7 +59,10 @@ function NavigationDialog() {
 					</svg>
 				</button>
 			</NavDialog.Trigger>
-			<NavDialog.Content aria-label="site navigation">
+			<NavDialog.Content
+				aria-label="site navigation"
+				className="comp-SiteHeader__navDialog"
+			>
 				<nav aria-label="primary" className="comp-SiteHeader__mobileNav">
 					<NavList>
 						{links.map((link) => (

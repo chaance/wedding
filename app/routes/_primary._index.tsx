@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as CalendarLink from "calendar-link";
+import cx from "clsx";
 import { useLoaderData } from "react-router";
 import { useIsHydrated } from "@chance/hooks";
 import { Hero, type ImageSource } from "~/lib/hero";
@@ -119,11 +120,11 @@ export default function Index() {
 						</ButtonLink>
 						{isHydrated ? (
 							<CalendarPopper
-								trigger={({ props, ref }) => (
+								trigger={({ props: { className, ...props }, ref }) => (
 									<Button
 										ref={ref}
 										type="button"
-										className="rte-Home__heroButton"
+										className={cx("rte-Home__heroButton", className)}
 										size="lg"
 										glassy
 										{...props}

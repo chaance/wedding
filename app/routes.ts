@@ -12,6 +12,7 @@ export default [
 		route("accommodations", "routes/_primary.accommodations.tsx"),
 		route("qa", "routes/_primary.qa.tsx"),
 		route("travel", "routes/_primary.travel.tsx"),
+		route("venue", "routes/_primary.venue.tsx"),
 	]),
 	route("rsvp", "routes/rsvp.ts"),
 ] satisfies RouteConfig;

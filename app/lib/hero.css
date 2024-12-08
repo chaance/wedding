@@ -10,6 +10,7 @@
 	box-shadow: 0 0.2rem 4rem -1rem hsl(0 0% 0% / 0.6);
 	margin-inline: auto;
 	inline-size: calc(100% - var(--_gutter) * 2);
+	text-align: center;
 
 	&:where([data-size="half"]) {
 		min-block-size: max(16rem, calc(var(--size-dvh) / 2 - var(--size-header)));
@@ -69,5 +70,13 @@
 	block-size: 100%;
 	inline-size: 100%;
 	object-fit: cover;
-	object-position: center;
+	&:where([data-position="center"]) {
+		object-position: center;
+	}
+	&:where([data-position="top"]) {
+		object-position: top;
+	}
+	&:where([data-position="bottom"]) {
+		object-position: bottom;
+	}
 }

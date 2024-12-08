@@ -28,18 +28,18 @@
 	gap: 0.333em;
 	font-size: 1.5rem;
 	line-height: 1;
+	isolation: isolate;
 	& svg {
-		color: var(--color-green-9);
+		z-index: -1;
+		height: 2em;
 		position: absolute;
 		inset: 50%;
-		transform: translate(-50%, -50%);
-		height: 1.7em;
-		z-index: -1;
+		transform: translate(-50%, -40%);
 		fill: currentColor;
+		opacity: 0.6;
+		color: var(--color-green-9);
 		stroke: currentColor;
-		stroke-linecap: round;
-		stroke-linejoin: round;
-		stroke-width: 1;
+		stroke-width: 1px;
 	}
 }
 
@@ -74,6 +74,12 @@
 	display: none;
 	@media (--md) {
 		display: flex;
+	}
+}
+
+.comp-SiteHeader__navDialog {
+	@media (--md) {
+		display: none;
 	}
 }
 

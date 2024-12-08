@@ -14,11 +14,13 @@ export function Hero({
 	className,
 	imgSources,
 	gutters = false,
+	imgPosition = "center",
 	size = "full",
 }: {
 	children: React.ReactNode;
 	className?: string;
 	imgSources: ImageSource[];
+	imgPosition?: "center" | "top" | "bottom";
 	gutters?: boolean;
 	size?: "full" | "half";
 }) {
@@ -38,7 +40,12 @@ export function Hero({
 						<source srcSet={src} media={media} type={type} />
 					</React.Fragment>
 				))}
-				<img className="comp-Hero__imageInner" src={fallback.src} alt="" />
+				<img
+					className="comp-Hero__imageInner"
+					data-position={imgPosition}
+					src={fallback.src}
+					alt=""
+				/>
 			</picture>
 			<div className="comp-Hero__inner">{children}</div>
 		</div>
