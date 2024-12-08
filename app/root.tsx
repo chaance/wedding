@@ -15,6 +15,26 @@ import { SiteFooter } from "./lib/site-footer";
 
 export const links: Route.LinksFunction = (): Route.LinkDescriptors => [
 	{
+		rel: "icon",
+		href: "/favicon.svg",
+		media: "(prefers-color-scheme:no-preference)",
+	},
+	{
+		rel: "icon",
+		href: "/favicon-dark.svg",
+		media: "(prefers-color-scheme:dark)",
+	},
+	{
+		rel: "icon",
+		href: "/favicon.svg",
+		media: "(prefers-color-scheme:light)",
+	},
+	{
+		rel: "mask-icon",
+		href: "/mask-icon.svg",
+		color: "#46A758",
+	},
+	{
 		rel: "stylesheet",
 		href: stylesheetUrl,
 	},
@@ -43,13 +63,6 @@ export const links: Route.LinksFunction = (): Route.LinkDescriptors => [
 		rel: "preload",
 		as: "font",
 		href: "/fonts/editorial-new-italic-variable.woff2",
-		type: "font/woff2",
-		crossOrigin: "anonymous",
-	},
-	{
-		rel: "preload",
-		as: "font",
-		href: "/fonts/mori-variable.woff2",
 		type: "font/woff2",
 		crossOrigin: "anonymous",
 	},

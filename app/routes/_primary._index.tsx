@@ -8,12 +8,15 @@ import { Button, ButtonLink } from "~/lib/button";
 import { CalendarPopper } from "~/lib/calendar-popper";
 import stylesheetUrl from "./_primary._index.css?url";
 import type { Route } from "./+types/_primary._index";
+import { getMeta } from "~/lib/meta";
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "stylesheet", href: stylesheetUrl },
 ];
 
-export async function loader(_args: Route.LoaderArgs) {
+export async function loader(args: Route.LoaderArgs) {
+	const url = new URL(args.request.url);
+	const rootUrl = `${url.protocol}//${url.host}`;
 	const wedding: CalendarLink.CalendarEvent = {
 		title: "Chance and Morgan's Wedding",
 		duration: [6, "hour"],
@@ -23,17 +26,15 @@ export async function loader(_args: Route.LoaderArgs) {
 	};
 
 	return {
+		rootUrl,
 		google: CalendarLink.google(wedding),
 		ics: CalendarLink.ics(wedding),
 		outlook: CalendarLink.outlook(wedding),
 	};
 }
 
-export const meta: Route.MetaFunction = (_args) => {
-	return [
-		{ title: "New Remix App" },
-		{ name: "description", content: "Welcome to Remix!" },
-	];
+export const meta: Route.MetaFunction = ({ data }) => {
+	return [...getMeta({ rootUrl: data.rootUrl })];
 };
 
 // prettier-ignore
@@ -78,7 +79,7 @@ export default function Index() {
 						Morgan
 					</h1>
 					<p className="rte-Home__heroContentBody">
-						After eight good years, we're doing the damn thing! Join us for a
+						After eight good years, we’re doing the damn thing! Join us for a
 						celebration of love and friendship as we start this new chapter.
 					</p>
 

@@ -10,7 +10,7 @@ export default [
 		// primary layout routes
 		index("routes/_primary._index.tsx"),
 		route("accommodations", "routes/_primary.accommodations.tsx"),
-		route("qa", "routes/_primary.qa.tsx"),
+		// route("qa", "routes/_primary.qa.tsx"),
 		route("travel", "routes/_primary.travel.tsx"),
 		route("venue", "routes/_primary.venue.tsx"),
 	]),
