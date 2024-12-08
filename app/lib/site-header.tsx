@@ -65,6 +65,7 @@ function NavigationDialog() {
 			>
 				<nav aria-label="primary" className="comp-SiteHeader__mobileNav">
 					<NavList>
+						<NavItem to="/">Home</NavItem>
 						{links.map((link) => (
 							<NavItem key={link.text} to={link.to}>
 								{link.text}
