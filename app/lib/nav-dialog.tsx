@@ -4,6 +4,7 @@ import { RemoveScroll } from "react-remove-scroll";
 import { useComposedRefs } from "@chance/hooks/use-composed-refs";
 import { Portal } from "./portal";
 import { useEffectEvent } from "@chance/hooks";
+import { useLocation } from "react-router";
 
 function getStore(dialogElement: HTMLDialogElement | null) {
 	type State = { isOpen: boolean };
@@ -118,6 +119,12 @@ function NavDialogRoot(props: { children: React.ReactNode }) {
 		getSnapshot,
 		getServerSnapshot,
 	);
+
+	let location = useLocation();
+	React.useEffect(() => {
+		close();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [location.pathname]);
 
 	useMatchMediaChange("(min-width: 768px)", (matches) => {
 		console.log("matches", matches);
